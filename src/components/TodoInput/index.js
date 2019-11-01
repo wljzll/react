@@ -13,3 +13,7 @@ export default function TodoInput() {
 TodoInput.propTypes = {
   value: PropTypes.string
 }
+
+TodoInput.defaultProps = {
+  value: PropTypes.string
+}

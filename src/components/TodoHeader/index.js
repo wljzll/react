@@ -9,6 +9,9 @@ export default class TodoHeader extends Component {
     x: PropTypes.string
   }
   
+  static defaultProps = {
+    
+  }
   render() {
     console.log(this.props)
     return (
