@@ -16,7 +16,9 @@ export default class TodoHeader extends Component {
     console.log(this.props)
     return (
       <div>
-        {this.props.children} --- {this.props.desc} --- {this.props.x + this.props.y} --- {this.props.m + this.props.n}
+       <h1>{this.props.children} </h1> 
+        
+       <p>{this.props.desc}</p>
 
       </div>
     )

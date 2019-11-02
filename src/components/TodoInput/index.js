@@ -1,19 +1,36 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 
-export default function TodoInput() {
-  return (
-    <div>
-      TodoInput组件
+
+export default class TodoInput extends Component {
+  constructor(){
+    super()
+    this.state = {
+      inputValue : 'xxx'
+    }
+  }
+  handelInputChange = (e) => {
+    console.log(this.state.inputValue, e.currentTarget.value, 'input组件')
+    this.setState({
+      inputValue: e.currentTarget.value
+    })
+  }
+  render() {
+    return (
+      <div>
+      <input type="text" value={this.state.inputValue} onChange={this.handelInputChange}/>
+      <button>{this.props.btnText}</button>
     </div>
-  )
+    )
+  }
 }
 
 // 函数组件使用PropTypes的方式
 TodoInput.propTypes = {
-  value: PropTypes.string
+  btnText: PropTypes.string
 }
 
 TodoInput.defaultProps = {
-  value: PropTypes.string
+  btnText: '添加'
 }
+
