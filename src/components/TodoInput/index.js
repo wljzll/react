@@ -10,16 +10,21 @@ export default class TodoInput extends Component {
     }
   }
   handelInputChange = (e) => {
-    console.log(this.state.inputValue, e.currentTarget.value, 'input组件')
     this.setState({
       inputValue: e.currentTarget.value
     })
+
   }
+
+  handleBtnClick = () =>{
+    this.props.addTodo(this.state.inputValue)
+  }
+
   render() {
     return (
       <div>
       <input type="text" value={this.state.inputValue} onChange={this.handelInputChange}/>
-      <button>{this.props.btnText}</button>
+      <button onClick={this.handleBtnClick}>{this.props.btnText}</button>
     </div>
     )
   }
