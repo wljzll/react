@@ -1,27 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import { increment, decrement } from '../../actions/cart'
 
-export default class CardList extends Component {
-  constructor() {
-    super()
-    this.state = {
-      cardList: []
-    }
-  }
+class CardList extends Component {
 
-  getState = () => {
-    this.setState({
-      cardList: this.props.store.getState().cart
-    })
-  }
-  componentDidMount() {
-    this.getState()
-    this.props.store.subscribe(this.getState)
-
-  }
   render() {
-    console.log(this.state.cardList)
+    console.log(this.props)
     return (
       <table>
         <thead>
@@ -36,7 +21,7 @@ export default class CardList extends Component {
 
         <tbody>
           {
-            this.state.cardList.map(item => {
+            this.props.cardList.map(item => {
               return (
                 <tr key={item.id}>
                   <td>{item.id}</td>
@@ -44,13 +29,13 @@ export default class CardList extends Component {
                   <td>{item.price}</td>
                   <td>{item.amount}</td>
                   <td>
-                    <button onClick={() => {
-                      this.props.store.dispatch(decrement(item.id))
-                    }}>-</button>
+                    <button onClick={
+                      this.props.decrement.bind(this, item.id)
+                    }>-</button>
                     <span>{item.amount}</span>
-                    <button onClick={() => {
-                      this.props.store.dispatch(increment(item.id))
-                    }}>+</button>
+                    <button onClick={
+                      this.props.increment.bind(this, item.id)
+                    }>+</button>
                   </td>
                 </tr>
               )
@@ -62,3 +47,11 @@ export default class CardList extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    cardList: state.cart
+  }
+}
+
+export default connect(mapStateToProps, { increment, decrement })(CardList)
