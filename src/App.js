@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BlogList from './components/BlogList/BlogList'
+import {CardList} from './components/index'
 
 
 
@@ -7,7 +7,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <BlogList/>
+        <CardList {...this.props}/>
       </div>
     )
   }
