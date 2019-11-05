@@ -1,36 +1,96 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, createContext } from 'react';
 import { render } from 'react-dom';
 
+console.log(createContext())
+const { Provider,
+  Consumer: CounterConsumer
+} = createContext()
 
-const Counter = () => {
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-   document.title = `当前的数量是${count}`
-  })
-  return (
-    <div>
-      <button onClick={() => {
-        setCount(count - 1)
-      }}>-</button>
-      <span>{count}</span>
-      <button onClick={() => {
-        setCount(count + 1)
-      }}>+</button>
-    </div>
-  )
+// 定义组件存放数据 将数据通过挂载到 Provider组件的value属性上往下传递
+class CounterProvider extends Component {
+  constructor() {
+    super()
+    this.state = {
+      count: 100
+    }
+  }
+  incrementCount = () => {
+    this.setState({
+      count: this.state.count + 1
+    })
+  }
+  decrementCount = () => {
+    this.setState({
+      count: this.state.count - 1
+    })
+  }
+  render() {
+    return (
+      <Provider value={{
+        count: this.state.count,
+        onIncrementCount: this.incrementCount,
+        onDecrementCount: this.decrementCount
+      }}>
+        {this.props.children}
+      </Provider>
+    )
+  }
+}
+
+
+// 按钮组件
+class CounterBtn extends Component {
+  render() {
+    return (
+      <CounterConsumer>
+        {
+          ({ onIncrementCount, onDecrementCount }) => {
+            const handler = this.props.type === "decrement" ? onDecrementCount : onIncrementCount;
+            return <button onClick={handler}>{this.props.children}</button>
+          }
+        }
+      </CounterConsumer>
+
+    )
+  }
+}
+
+// 数字组件
+class Counter extends Component {
+  render() {
+    return (
+      <CounterConsumer>
+        {
+          ({ count }) => {
+
+            return <span>{count}</span>
+          }
+        }
+
+      </CounterConsumer>
+
+    )
+  }
+}
+
+
+// 入口组件App组件
+class App extends Component {
+  render() {
+    return (
+      <>
+        <CounterBtn type="decrement">-</CounterBtn>
+        <Counter />
+        <CounterBtn type="increment">+</CounterBtn>
+      </>
+    )
+  }
 }
 
 render(
-  <Counter />,
+  <CounterProvider>
+    <App />
+  </CounterProvider>,
   document.querySelector('#root')
 )
 
-// useState的用法
-// 1、useState是一个数组，数组中有两个元素:
-// 第一个是当前设置的state的值;
-// 第二个是用来设置当前state的方法;
-// 2、一个函数式组件的可以同时定义多个useState
-
-// useEffect的用法
-// useEffect相当于react生命周期的 componentDidMount 和componentDidUpdate的结合
-// 组件渲染完成或者更新完成都会触发这个函数
