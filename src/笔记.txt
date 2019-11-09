@@ -1,0 +1,1 @@
+第一步 创建store文件 : store.js;

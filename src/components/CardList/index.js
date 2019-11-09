@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+// connect方法执行之后是一个高阶组件，
 import { connect } from 'react-redux'
 
+
+// 导入actionCreators
 import { increment, decrement } from '../../actions/cart'
 
 class CardList extends Component {
@@ -54,4 +57,10 @@ const mapStateToProps = (state) => {
   }
 }
 
+
+// connect方法有四个参数，常用的就是前面两个：
+// 第一个参数是 mapStateToProps, 作用就是从store里把state注入到当前组件的props上
+// 第二个参数可以是 mapDispatchToProps,这个的主要作用是把action生成的方法注入到当前的组件的props上，一般来说没必要这样用
+
+// 直接第二个参数传递一个
 export default connect(mapStateToProps, { increment, decrement })(CardList)
