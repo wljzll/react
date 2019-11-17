@@ -1,1 +1,5 @@
-export {default as BlogList } from './BlogList/BlogList'
+export {default as Home} from './Home'
+export {default as Users} from './Users'
+export {default as Artical} from './Artical'
+export {default as ArticalDetails} from './Artical/ArticalDetails'
+export {default as NotFound} from './NotFound'
