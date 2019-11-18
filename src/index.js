@@ -1,13 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from './App'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
-
-import { HashRouter, Route } from "react-router-dom";
 
 render(
-  <HashRouter>
-    <Route component={App}></Route>
-  </HashRouter>,
+  <Router>
+    <Route component={App} path="/"/>
+  </Router>,
   document.querySelector('#root')
 )
