@@ -26,9 +26,9 @@ export function fork(saga) {
 
 /**
  * 当监听到某个动作类型的时候，开启新的子进程执行saga
- * @param {*} actionType 动作类型 
+ * @param {*} actionType 动作类型 yield takeEvery(actionTypes.ASYNC_ADD, addWorker)
  * @param {*} saga work saga 生成器
- * @returns 
+ * @returns 一个标识了FORK类型的对象 对象中的saga又是一个生成器函数
  */
 export function takeEvery(actionType, saga) {
     function* takeEveryHelper() {

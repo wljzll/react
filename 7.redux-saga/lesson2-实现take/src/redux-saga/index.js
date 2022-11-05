@@ -4,8 +4,12 @@ import runSaga from './runSaga';
 // channel用来实现我们的发布订阅
 import stdChannel from './channel';
 
-
+/**
+ * 
+ * @returns 返回saga中间件函数
+ */
 function createSagaMiddleware() {
+    // 创建channel实例 实现发布订阅
     const channel = stdChannel();
     let boundRunSaga;
     function sagaMiddleware({ getState, dispatch }) {

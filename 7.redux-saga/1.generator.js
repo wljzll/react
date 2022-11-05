@@ -1,6 +1,7 @@
 function* read() { // 表示它是一个generator函数 可以将函数切成若干部分
+    console.log('谁先执行')
     const a = yield (function () {
-        console.log('是不是会执行yield后面的语句');
+        // console.log('是不是会执行yield后面的语句');
         return 'test'
     })();
     console.log(a, 'a=======');
@@ -19,6 +20,7 @@ console.log(it.next());
 /**
  * 1. 执行迭代器(it)的next()方法 每次碰到yield语句就停止执行 是指只执行完yield后
  *    的语句 并不对yield之前的语句进行执行;
+ *    it.next()执行返回的{value: 值，done: true/false} 值就是yield语句后面的表达式或者表达式执行的返回值
  *    例如上面的例子: 第一次执行it.next()把yield后的函数执行完毕就停止了 不会对a
  *    进行赋值
  * 

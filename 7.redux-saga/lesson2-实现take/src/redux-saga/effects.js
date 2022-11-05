@@ -11,6 +11,11 @@ export function take(actionType) {
     return { type: effectTypes.TAKE, actionType };
 }
 
+/**
+ * 将要派发的action包装一下，是为了交给runSaga处理识别
+ * @param {*} action { type: actionTypes.ADD } 用户定义的actionType
+ * @returns runSaga能够识别的PUT指令对象
+ */
 export function put(action) {
     return { type: effectTypes.PUT, action };
 }

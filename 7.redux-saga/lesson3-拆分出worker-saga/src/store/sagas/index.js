@@ -2,7 +2,7 @@ import * as actionTypes from '../action-types';
 import { take, put } from '../../redux-saga/effects';
 
 
-// worker saga
+// worker saga：其实就是生成器　worker saga执行后返回的是一个迭代器 交给runSaga递归开启个子进程 继续执行
 function* add () {
     yield put({ type: actionTypes.ADD });
 }

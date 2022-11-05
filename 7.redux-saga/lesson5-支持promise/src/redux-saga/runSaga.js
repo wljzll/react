@@ -14,13 +14,13 @@ function runSaga(env, saga) {
         // 默认执行第一次： {effect: {type: 'TAKE', actionType: 'ASYNC_ADD'}, done: false }
         // 执行第二次派发： {effect: {type: 'PUT', action: {type: 'ADD'}}}
         // effect可能是{type:'', actionType/action: ''}, 也可能是{type: '', saga: ''}
-        let { value: effect, done } = it.next(val);
+        let { value: effect, done } = it.next(val); // 每次next()产出的都是yield后的表达式
         if (!done) {
             // 如果yield产出的是一个迭代器
             if (typeof effect[Symbol.iterator] === 'function') {
                 runSaga(env, effect); // 这个就好比开启了一个子进程(实际不是子进程) 执行worker saga, 当前的saga继续执行
                 next(); // 调用next就让当前的saga继续执行
-            } else if (typeof effect.then === 'function') {
+            } else if (typeof effect.then === 'function') { // 如果yield后的函数是Promise
                 effect.then(next);
             } else {
                 switch (effect.type) {
