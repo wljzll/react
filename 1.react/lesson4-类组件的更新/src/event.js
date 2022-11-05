@@ -3,7 +3,9 @@ import {
 } from "./Component";
 
 export function addEvent(dom, eventType, handler) {
+  // 赋过值就取出来 没赋过值定义一个空对象
   let store = dom.store || (dom.store = {})
+  // 保存事件处理函数
   store[eventType] = handler;
   if (!document[eventType]) {
     document[eventType] = dispatchEvent;
@@ -11,12 +13,12 @@ export function addEvent(dom, eventType, handler) {
 }
 
 function dispatchEvent(event) {
-  let {
-    target,
-    type
-  } = event;
+  // target: 目标DOM type: 事件类型
+  let {target, type} = event;
+  // 组合成事件
   let eventType = `on${type}`;
   let syntheticEvent = createSyntheticEvent(event);
+  // 开启批量更新
   updateQueue.isBatchingUpdate = true;
   while(target) {
     let { store } = target;
@@ -28,6 +30,7 @@ function dispatchEvent(event) {
     }
     target = target.parentNode;
   }
+  // 事件处理函数执行完成 批量更新组件
   updateQueue.batchUpdate();
 }
 

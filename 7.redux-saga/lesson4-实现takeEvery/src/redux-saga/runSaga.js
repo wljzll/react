@@ -1,9 +1,9 @@
 import * as effectTypes from './effectTypes';
 
 /**
- * 
+ *
  * @param {*} env channel dispatch getState
- * @param {*} saga 可能是一个生成器也可能是一个迭代器 
+ * @param {*} saga 可能是一个生成器也可能是一个迭代器
  */
 function runSaga(env, saga) {
     let { channel, dispatch, getState } = env;
@@ -15,6 +15,7 @@ function runSaga(env, saga) {
         // 执行第二次派发： {effect: {type: 'PUT', action: {type: 'ADD'}}}
         // effect可能是{type:'', actionType/action: ''}, 也可能是{type: '', saga: ''}
         let { value: effect, done } = it.next(val);
+        console.log(effect, 'xxxxxxxxxxxxxxxxxxxxx');
         if (!done) {
             // 如果yield产出的是一个迭代器
             if (typeof effect[Symbol.iterator] === 'function') {

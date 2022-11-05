@@ -28,7 +28,7 @@ function mount(vdom, container) {
 
 // /**
 //  * @description 创建一个state 这是一个闭包 hookIndex
-//  * @param {初始state} initialState 
+//  * @param {初始state} initialState
 //  * @returns 当前的state和setState函数
 //  */
 // export function useState(initialState) {
@@ -49,9 +49,9 @@ function mount(vdom, container) {
 // }
 
 /**
- * 
- * @param {创建返回值的函数} factory 
- * @param {依赖项数组 只有依赖项数组的值发生了变化才会重新执行factory} deps 
+ *
+ * @param {创建返回值的函数} factory
+ * @param {依赖项数组 只有依赖项数组的值发生了变化才会重新执行factory} deps
  * @returns factory函数的返回值
  */
 export function useMemo(factory, deps) {
@@ -77,12 +77,12 @@ export function useMemo(factory, deps) {
 }
 
 /**
- * @description useCallback是用来缓存函数的 
+ * @description useCallback是用来缓存函数的
  * 如果依赖项deps变化了: 返回callback这是一个新的函数
  * 如果依赖项deps未变化: 返回lastCallback引用地址没变 所以把callback传给子组件时子组件不会更新
- * @param {*} callback 
- * @param {*} deps 
- * @returns 
+ * @param {*} callback
+ * @param {*} deps
+ * @returns
  */
 export function useCallback(callback, deps) {
   // 当组件更新时 会重置 hookIndex为0 所以组件内执行useMemo时
@@ -105,10 +105,10 @@ export function useCallback(callback, deps) {
 }
 
 /**
- * 
- * @param {*} reducer 自己定义的改变传入的状态的函数 
+ *
+ * @param {*} reducer 自己定义的改变传入的状态的函数
  * @param {*} initialState 初始状态
- * @returns 
+ * @returns
  */
 export function useReducer(reducer, initialState) {
   // hookState中有则取用 没有则赋初始值
@@ -123,6 +123,7 @@ export function useReducer(reducer, initialState) {
     } else {
       hookState[currentIndex] = typeof action === 'function' ? action(oldState) : action;
     }
+    // 强制刷新组件
     scheduleUpdate();
   }
   return [hookState[hookIndex++], dispatch];

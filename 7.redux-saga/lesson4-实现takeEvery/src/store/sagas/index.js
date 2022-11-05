@@ -13,7 +13,8 @@ import addListener from './add';
 // }
 
 export default function* rootSage() {
-    yield addListener();
+  // addListener()执行生成的是迭代器
+  yield addListener();
 }
 
 // export default function* rootSage() {

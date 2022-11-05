@@ -2,8 +2,11 @@ import * as effectTypes from './effectTypes';
 
 function runSaga(env, saga) {
     let { channel, dispatch, getState } = env;
-    let it = saga(); // 生成迭代器
 
+    // 1. 生成迭代器
+    let it = saga();
+
+    // next是自定义的驱动saga执行的函数 和CO库的原理一样
     function next(val) {
         // 默认执行第一次： {effect: {type: 'TAKE', actionType: 'ASYNC_ADD'}, done: false }
         // 执行第二次派发： {effect: {type: 'PUT', action: {type: 'ADD'}}}

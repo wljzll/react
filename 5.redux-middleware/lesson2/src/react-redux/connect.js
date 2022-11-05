@@ -4,7 +4,7 @@ import { bindActionCreators } from '../redux';
 import ReactReduxContext from './ReactReduxContext';
 
 /**
- * 
+ *
  * @param {*} mapStateToProps 把仓库中对应的状态映射为当前组件的属性
  * @param {*} mapDispatchToProps 把派发动作的方法映射为当前组件的属性
  */
@@ -17,7 +17,7 @@ function connect(mapStateToProps, mapDispatchToProps) {
             const { getState, dispatch, subscribe } = store;
             // 拿到当前的state
             const prevState = getState();
-            // 传递给mapStateToProps方法 取出组件要映射的state
+            // 传递给mapStateToProps方法 取出组件要映射的state mapStateToProps是用户自己定义的如何映射由用户自己决定
             const stateProps = mapStateToProps(prevState);
 
             let dispatchProps;

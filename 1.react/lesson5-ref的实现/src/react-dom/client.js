@@ -64,6 +64,7 @@ function mountClassComponent(vdom) {
   if (ref) ref.current = classInstance;
   // 调用类组件的render方法: 先经过babel将render方法中的JSX编译成React.createElement()方法，再执行React.createElement()方法生成虚拟DOM
   // 这个renderVdom才是JSX的Vdom
+  console.log(classInstance.render(), 'classInstance.render()');
   let renderVdom = classInstance.render();
   // 给类组件的实例上添加也给oldRenderVdom属性 属性值是类组件的标签的虚拟DOM
   classInstance.oldRenderVdom = renderVdom;
