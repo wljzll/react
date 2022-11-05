@@ -1,11 +1,11 @@
-
-/**
- * 
- * @returns 返回on trigger方法实现发布订阅
- */
 function stdChannel() {
     let currentTakers = [];
-    //  actionType 等待的动作类型  taker 等到之后执行处理函数 next
+
+    /**
+     *
+     * @param {*} actionType 等待的动作类型
+     * @param {*} taker 等到之后执行处理函数 next 找个next是CO库里执行的next 并不是中间件接收的劫持后的dispatch
+     */
     function on(actionType, taker) {
         taker.actionType = actionType; // ASYNC_ADD
 

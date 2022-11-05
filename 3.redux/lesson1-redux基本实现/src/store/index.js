@@ -2,7 +2,7 @@ import { createStore } from '../redux';
 
 
 /**
- * redux其实是吧所有的操作权限都交给了我们
+ * redux其实是把所有的操作权限都交给了我们
  * @param {*} state 老状态
  * @param {*} action 动作对象 也是一个普通的JS对象 必须有个type属性 用来表示你想干什么
  */

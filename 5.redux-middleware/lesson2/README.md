@@ -1,9 +1,48 @@
-### useMemo
-> 把创建函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算
+### compose函数执行分析
+```javascript
+// 以三个中间件: logger thunk promise 为例
+function compose(...funcs) {
+  return funcs.reduce((a, b) => {
+    return (...args) => a(b(...args));
+  })
+}
 
-### useCallback
-> 把内联回调函数及依赖项数组作为参数传入 useCallback，它将返回该回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新
+// 传递个compose的是已经执行掉第一层的三个中间件 funcs = [promiseMiddleFunc, thunkMiddleFunc, loggerMiddleFunc]
 
-### 理解
-> 当我们给子组件传递属性时，如果属性没变化则我们不希望子组件更新，所以我们使用useMemo返回同一个引用地址的属性
-> 当我们给子组件传递方法时，父组件每次更新都会重新定义这个方法，引用地址就变了，就会导致子组件更新，我们使用useCallback就可以根据依赖项选择当父组件更新时是否返回新的引用地址
+/** reduce的callback的执行的逻辑:
+ * 第一次执行:
+ *           a = promiseMiddleFunc;
+ *           b = thunkMiddleFunc;
+ *           返回 (...args) => promiseMiddleFunc(thunkMiddleFunc(...args))
+ *
+ * 第二次执行:
+ *           a =  (...args) => promiseMiddleFunc(thunkMiddleFunc(...args));
+ *           b = loggerMiddleFunc;
+ *           返回 (...args) => promiseMiddleFunc(thunkMiddelFunc(loggerMiddleFunc(...args)))
+ * 至此, compose处理完成
+ */
+```
+
+## applyMiddleware执行分析:
+```javascript
+// dispatch = compose(...chain)(store.dispatch);
+// compose(...chain) => (...args) => promiseMiddleFunc(thunkMiddelFunc(loggerMiddleFunc(...args)))
+
+/**
+ *  执行 (...args) => promiseMiddleFunc(thunkMiddelFunc(loggerMiddleFunc(...args)))
+ *
+ *  第一步: 执行loggerMiddleFunc(store.dispatch) => 返回loggerDispatch 最后一个中间件接受的是原生的dispatch
+ *  第二步: 执行thunkMiddleFunc(loggerDispatch)  => 返回thunkDispatch
+ *  第三步: 执行promiseMiddleFunc(thunkDispatch) => 返回promsieDispatch
+ *
+ *  applyMiddleware中 dispatch = compose(...chain)(store.dispatch); 这个dispatch就是promiseDispatch
+ *
+ *  比如我们现在派发一个函数式action:
+ *  第一步: 调用promiseDispatch, 不是Promise, promiseDispatch直接调用next()也就是thunkDispatch处理
+ *  第二步: thunkDispatch能处理, 处理完成后调用dispatch()往下走, 这个dispatch实际上是promiseDispatch, 又回到了promsieDispatch
+ *  第三步: promiseDispatch还是直接调用next()交给thunkDispatch
+ *  第四步: 这时候action不是函数了 thunkDispatch直接调用next()也就是loggerDispatch
+ *  第五步: loggerDispatch输出了日志 调用原生的dispatch结束流程
+ */
+
+```

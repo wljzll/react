@@ -1,12 +1,12 @@
 import React from "react";
 import { Router } from '../react-router';
-import { createHashHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 class BrowerRouter extends React.Component {
-    constructor(props) {
+    constructor(props) { // 这里的props一般是没有的
         super(props)
         // 创建hashHistory
-        this.history = createHashHistory(props);
+        this.history = createBrowserHistory(props);
     }
     render() {
         return (

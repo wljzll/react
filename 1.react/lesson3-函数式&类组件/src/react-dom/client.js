@@ -2,7 +2,7 @@
 import { REACT_TEXT } from '../constant'
 /**
  * @description 把虚拟DOM转成真实DOM插入容器中
- * @param {*} vdom 虚拟DOM 
+ * @param {*} vdom 虚拟DOM
  * @param {*} container 容器
  */
 function render(vdom, container) {
@@ -12,8 +12,8 @@ function render(vdom, container) {
 
 /**
  * @description 将虚拟DOM创建成真实DOM并返回
- * @param {*} vdom 虚拟DOM 
- * @returns 
+ * @param {*} vdom 虚拟DOM
+ * @returns
  */
 function createDOM(vdom) {
   // 从vdom中解构出type props
@@ -49,21 +49,24 @@ function createDOM(vdom) {
 }
 
 /**
- * 
- * @param {*} vdom 
- * @returns 
+ *
+ * @param {*} vdom 类组件标签本身的虚拟DOM
+ * @returns
  */
 function mountClassComponent(vdom) {
+  // type是类组件的Class的引用
   let { type, props } = vdom;
   let classInstance = new type(props);
+  // 调用类组件实例的render()方法 - 又会调用React.CreateElement()方法 生成类组件中真实DOM的虚拟DOM
   let renderVdom = classInstance.render();
+  // 将类组件中返回的真实DOM创建成虚拟DOM并返回
   return createDOM(renderVdom);
 }
 
 /**
  * @description 将函数式组件创建成真实DOM
- * @param {*} vdom babel编译出的函数式组件的虚拟DOM 
- * @returns 
+ * @param {*} vdom babel编译出的函数式组件的虚拟DOM
+ * @returns
  */
 function mountFunctionComponent(vdom) {
   // 从babel编译出的函数式组件的虚拟DOM中解构出 type: ƒ FunctionComponent(props) 和 props:{name: 'zhufeng'}

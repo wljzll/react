@@ -11,7 +11,7 @@ const delay = (ms) => new Promise(function (resolve, reject) {
 
 // worker saga
 function* addWorker() {
-    yield delay(1000);
+    yield delay(5000);
     yield put({ type: actionTypes.ADD });
 }
 

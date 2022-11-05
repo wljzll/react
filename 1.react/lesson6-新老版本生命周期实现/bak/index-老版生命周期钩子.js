@@ -11,7 +11,7 @@ class Counter extends React.Component {
     }
     console.log('Counter 1 constructor');
   }
-  componentWillMount() { // react18 废弃了will相关的声明周期钩子
+  componentWillMount() { // react18 废弃了will相关的生命周期钩子
     console.log('Counter 2 componentWillMount');
   }
   componentDidMount() {
