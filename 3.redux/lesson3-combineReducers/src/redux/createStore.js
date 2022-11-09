@@ -4,7 +4,6 @@
  * @param {*} reducer 根据老状态　计算下一个新状态
  */
 const createStore = (reducer) => {
-    console.log(reducer, 'ssssssssss');
     let state; // 可以存放任何内容
     let listeners = [];
 

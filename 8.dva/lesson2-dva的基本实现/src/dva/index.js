@@ -17,7 +17,7 @@ function dva() {
     let initialReducers = {};
 
     function model(model) {
-        // 给reducer添加命名空间前缀
+        // 给reducers中的reducer函数添加命名空间前缀: add => counter1/add
         const prefixedModel = prefixNamespace(model);
         // 收集每个model
         app._models.push(prefixedModel);
@@ -44,15 +44,16 @@ function dva() {
             {app._router()}
         </Provider>, document.querySelector(selector));
 
+        // 合并reducer
         function createReducer() {
             return combineReducers(initialReducers)
         }
     }
-    
+
     /**
-     * 
-     * @param {*} model app.model()传入的数据 
-     * @returns 
+     *
+     * @param {*} model app.model()传入的数据
+     * @returns
      */
     function getReducer(model) {
         let { reducers, state: initialState } = model;

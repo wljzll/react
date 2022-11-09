@@ -4,6 +4,8 @@ import * as effectTypes from './effectTypes';
  *
  * @param {*} env channel dispatch getState
  * @param {*} saga 可能是一个生成器也可能是一个迭代器
+ *                 初始化时是用户定义的rootSaga
+ *                 非初始化时可能是用户定义的监听Saga或者workerSaga
  */
 function runSaga(env, saga) {
     let { channel, dispatch, getState } = env;

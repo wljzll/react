@@ -4,10 +4,10 @@ import React from "react";
 import ReactReduxContext from "../ReactReduxContext";
 
 /**
- * 
- * @param {*} selector 开发者传递的获取state的方法 
+ *
+ * @param {*} selector 开发者传递的获取state的方法
  * @param {*} store 仓库
- * @returns 
+ * @returns
  */
 function useSelectorWithStore(selector, store) {
     // 从仓库中解构出两个方法
@@ -26,14 +26,16 @@ function useSelectorWithStore(selector, store) {
 }
 
 /**
- * 
- * @param {*} selector 获取state的方法 
- * @returns 
+ *
+ * @param {*} selector 函数参数 这个函数参数接受state作为参数
+ * @returns
  */
 function useSelector(selector) {
     // 取出store
     const { store } = React.useContext(ReactReduxContext);
+    // 执行selector取出对应的state
     const selectedState = useSelectorWithStore(selector, store);
+    // 返回对应的state
     return selectedState;
 }
 
