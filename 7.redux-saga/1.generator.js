@@ -5,7 +5,9 @@ function* read() { // 表示它是一个generator函数 可以将函数切成若
         return 'test'
     });
     console.log(a, 'a=======');
-    const b = yield 2;
+    const b = yield new Promise((resolve,reject) => {
+      resolve('xxxxxx');
+    });
     console.log(b, 'b=======');
     const c = yield 3;
     console.log(c, 'c=======');
@@ -15,9 +17,9 @@ console.log(read);
 const it = read();
 console.log(it) // Object [Generator] {}
 console.log('第一次调用next', it.next('next的参数是yield的返回值')); // { value: 1, done: false }
-console.log(it.next(123));
-console.log(it.next());
-console.log(it.next());
+console.log(it.next(123), '第一次执行next');
+console.log(it.next(), '第二次执行next');
+console.log(it.next(), '第三次执行next');
 /**
  * 1. 执行迭代器(it)的next()方法 每次碰到yield语句就停止执行 是指只执行完yield后
  *    的语句 并不对yield之前的语句进行执行;
